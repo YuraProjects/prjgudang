@@ -25,12 +25,36 @@ Manajement Data Kategori
                 <td><?= $nomor ?></td>
                 <td><?= $kat['katnama'] ?></td>
                 <td>
-                    aksi
+                    <button class="btn btn-info" title="Edit" onclick="edit('<?= $kat['katid'] ?>')">
+                        <i class="fa fa-edit"></i>
+                    </button>
+
+                    <form method="POST" action="/kategori/hapus/<?= $kat['katid'] ?>" style="display:inline" onsubmit="hapus()">
+                        <input type="hidden" value="DELETE" name="_method">
+                        <button type="submit" class="btn btn-danger" title="Hapus">
+                            <i class="fa fa-trash-alt"></i>
+                        </button>
+                    </form>
                 </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
+<script>
+    function edit(id) {
+        window.location = '/kategori/formEdit/' + id;
+    }
+
+    function hapus() {
+        let pesan = confirm('Yakin menghapus?');
+
+        if (pesan) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
 <?= $this->endSection() ?>
 
 <?= $this->section('subJudul') ?>
@@ -39,5 +63,6 @@ Manajement Data Kategori
     'class' => 'btn btn-info',
     'onclick' => "location.href=('" . site_url('kategori/tambah') . "')"
 ]) ?>
+
 
 <?= $this->endSection() ?>
