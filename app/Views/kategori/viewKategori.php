@@ -5,7 +5,12 @@ Manajement Data Kategori
 <?= $this->endSection() ?>
 
 <?= $this->section('isi') ?>
-
+<?= form_open('/kategori/index') ?>
+<div class="input-group mb-3" style="width: 35%;">
+    <input type="text" class="form-control" placeholder="Cari kategori..." aria-describedby="basic-addon2" name="keyword" value="<?= session()->getFlashdata('keyword') ?>">
+    <button class="input-group-text" id="basic-addon2" type="submit" name="submit"><i class="fa fa-search"></i></button>
+</div>
+<?= form_close() ?>
 <?= session()->getFlashdata('success') ?>
 
 <table class="table table-striped table-bordered" style="width: 100%;">
@@ -18,11 +23,11 @@ Manajement Data Kategori
     </thead>
     <tbody>
         <?php
-        $nomor = 1;
+        $nomor = 1 + (($pageCount - 1) * 5);
         foreach ($kategori as $kat) :
         ?>
             <tr>
-                <td><?= $nomor ?></td>
+                <td>#<?= $nomor++ ?></td>
                 <td><?= $kat['katnama'] ?></td>
                 <td>
                     <button class="btn btn-info" title="Edit" onclick="edit('<?= $kat['katid'] ?>')">
@@ -40,6 +45,9 @@ Manajement Data Kategori
         <?php endforeach; ?>
     </tbody>
 </table>
+<div class="float-center">
+    <?= $pager->links('kategori', 'mypager') ?>
+</div>
 <script>
     function edit(id) {
         window.location = '/kategori/formEdit/' + id;

@@ -14,8 +14,23 @@ class Kategori extends BaseController
 
     public function index()
     {
+        $submit = $this->request->getPost('submit');
+        $keyword = $this->request->getPost('keyword');
+
+        if (isset($submit) && $keyword) {
+            $query = $this->kategori->search($keyword)->paginate(5, 'kategori');
+            session()->setFlashdata('keyword', $keyword);
+        } else {
+            $query = $this->kategori->paginate(5, 'kategori');
+            session()->setFlashdata('keyword', '');
+        }
+
+        $pageCount = $this->request->getVar('page_kategori') ? $this->request->getVar('page_kategori') : 1;
+
         $data = [
-            'kategori' => $this->kategori->findAll()
+            'kategori' => $query,
+            'pager' => $this->kategori->pager,
+            'pageCount' => $pageCount
         ];
         return view('kategori/viewKategori', $data);
     }
