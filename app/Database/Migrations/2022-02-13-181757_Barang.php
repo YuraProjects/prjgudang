@@ -30,7 +30,13 @@ class Barang extends Migration
             ],
             'brggambar' => [
                 'type' => 'varchar',
-                'constraint' => 200
+                'constraint' => 200,
+                'null' => true
+            ],
+            'brgstok' => [
+                'type' => 'int',
+                'constraint' => 100,
+                'null' => true
             ]
         ]);
 
